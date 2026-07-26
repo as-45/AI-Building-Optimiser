@@ -24,7 +24,7 @@ class DecisionEngine:
 
                     target=action["target"],
 
-                    delta = action["target"] - action["current"]
+                    delta = action["target"] - action["current"],
 
                     priority=action["priority"],
 
