@@ -5,7 +5,7 @@ EnergyPlus runtime callbacks.
 
 Contains NO initialization logic.
 """
-
+from shared.runtime_state import RuntimeState
 class RuntimeCallbacks:
 
     def __init__(
@@ -64,6 +64,7 @@ class RuntimeCallbacks:
             print("Initialization Complete\n")
 
         building_state = self.sensor_reader.read(state)
+        RuntimeState.building_state = building_state
         self.history_buffer.add(building_state)
         previous = self.history_buffer.previous()
         if previous is not None:
@@ -82,7 +83,9 @@ class RuntimeCallbacks:
             print()
 
         metrics_report = self.metrics_engine.evaluate(building_state)
+        RuntimeState.metrics = metrics_report
         assessment = self.assessment_agent.assess(building_state,metrics_report)
+        RuntimeState.assessment = assessment
 
         print(
 
