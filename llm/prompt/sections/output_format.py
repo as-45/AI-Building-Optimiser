@@ -23,11 +23,18 @@ Do NOT wrap inside ```.
 Return EXACTLY this schema:
 
 {
+  "decision": {
+    "trigger": "",
+    "strategy": "",
+    "confidence": 0.0
+  },
+
   "reasoning": {
     "comfort_priority": 0.0,
     "energy_priority": 0.0,
     "carbon_priority": 0.0,
-    "confidence": 0.0
+    "why": "",
+    "tradeoffs": []
   },
 
   "actions": [
@@ -36,14 +43,15 @@ Return EXACTLY this schema:
       "current": 0,
       "target": 0,
       "delta": 0,
+      "priority": "HIGH",
       "reason": ""
     }
   ],
 
   "predictions": {
-    "expected_energy_saving_percent": 0,
-    "expected_carbon_reduction_percent": 0,
-    "expected_pmv": 0
+    "estimated_energy_saving_percent": 0,
+    "estimated_carbon_reduction_percent": 0,
+    "estimated_comfort_change": "",
+    "assumptions": []
   }
 }
-"""
