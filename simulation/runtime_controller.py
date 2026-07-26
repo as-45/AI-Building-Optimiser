@@ -18,10 +18,16 @@ from handle_manager import HandleManager
 from sensor_reader import SensorReader
 from runtime_callbacks import RuntimeCallbacks
 from agents.assessment_agent import AssessmentAgent
+from runtime.runtime_loop import RuntimeLoop
+from runtime.executor.action_executor import ActionExecutor
+from runtime.mcp_client import MCPClient
+from context.trend_analyzer import TrendAnalyzer
+from memory.memory_retriever import MemoryRetriever
 
 history_buffer = HistoryBuffer()
 metrics_engine = LiveMetricsEngine()
 assessment_agent = AssessmentAgent()
+
 
 # ------------------------------------------------------
 
@@ -37,6 +43,14 @@ config = json.load(
 
 )
 
+trend_analyzer = TrendAnalyzer()
+memory_retriever = MemoryRetriever()
+
+mcp_client = MCPClient(
+    config["mcp_server"]
+)
+
+executor = ActionExecutor()
 # ------------------------------------------------------
 
 api = EnergyPlusAPI()
@@ -55,13 +69,21 @@ sensor_reader = SensorReader(
 
 )
 
+runtime_loop = RuntimeLoop(
+    trend_analyzer,
+    memory_retriever,
+    mcp_client,
+    executor
+)
+
 callbacks = RuntimeCallbacks(
     api,
     handle_manager,
     sensor_reader,
     metrics_engine,
     assessment_agent,
-    history_buffer
+    history_buffer,
+    runtime_loop
 )
 
 # ------------------------------------------------------

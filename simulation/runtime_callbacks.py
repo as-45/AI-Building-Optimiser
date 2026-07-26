@@ -19,7 +19,8 @@ class RuntimeCallbacks:
         sensor_reader,
         metrics_engine,
         assessment_agent,
-        history_buffer
+        history_buffer,
+        runtime_loop
 
     ):
 
@@ -31,7 +32,7 @@ class RuntimeCallbacks:
         self.metrics_engine = metrics_engine
         self.assessment_agent = assessment_agent
         self.history_buffer = history_buffer
-
+        self.runtime_loop = runtime_loop
         self.initialized = False
 
         self.callback_counter = 0
@@ -86,6 +87,21 @@ class RuntimeCallbacks:
         RuntimeState.metrics = metrics_report
         assessment = self.assessment_agent.assess(building_state,metrics_report)
         RuntimeState.assessment = assessment
+        try:
+            runtime_result = self.runtime_loop.run_step(
+            building_state=building_state,
+            history=self.history_buffer.history,
+            current_episode=self.callback_counter,
+            trigger="runtime")
+
+            print("\n===== AI Decision =====")
+            print(runtime_result["decision"])
+
+            print("\n===== Execution =====")
+            print(runtime_result["execution"])
+
+        except Exception as ex:
+            print(f"Runtime Loop Error: {ex}")
 
         print(
 

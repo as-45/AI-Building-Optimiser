@@ -33,105 +33,73 @@ from context.context_builder import ContextBuilder
 class RuntimeLoop:
 
     def __init__(
-
         self,
-
         trend_analyzer,
-
         memory_retriever,
-
         mcp_client,
-
         executor
-
     ):
 
         self.metrics_engine = LiveMetricsEngine()
 
         self.context_builder = ContextBuilder(
-
             trend_analyzer,
-
             memory_retriever
-
         )
 
         self.mcp_client = mcp_client
-
         self.executor = executor
 
     # ----------------------------------------------------
 
     def run_step(
-
-    self,
-
-    building_state,
-
-    history,
-
-    current_episode,
-
-    trigger
-
-):
-
-    """
-    Executes one autonomous control cycle.
-    """
-
-    # ------------------------------------
-    # Evaluate live metrics
-    # ------------------------------------
-
-    metrics = self.metrics_engine.evaluate(
-
-        building_state
-
-    )
-
-    # ------------------------------------
-    # Build LLM context
-    # ------------------------------------
-
-    context = self.context_builder.build(
-
+        self,
         building_state,
-
         history,
-
         current_episode,
-
         trigger
+    ):
+        """
+        Executes one autonomous control cycle.
+        """
 
-    )
+        # ------------------------------------
+        # Evaluate live metrics
+        # ------------------------------------
 
-    # ------------------------------------
-    # Ask the AI
-    # ------------------------------------
+        metrics = self.metrics_engine.evaluate(
+            building_state
+        )
 
-    decision = self.mcp_client.analyze_building(
+        # ------------------------------------
+        # Build LLM context
+        # ------------------------------------
 
-        context.__dict__
+        context = self.context_builder.build(
+            building_state,
+            history,
+            current_episode,
+            trigger
+        )
 
-    )
+        # ------------------------------------
+        # Ask the AI
+        # ------------------------------------
 
-    # ------------------------------------
-    # Execute returned actions
-    # ------------------------------------
+        decision = self.mcp_client.analyze_building(
+            context.__dict__
+        )
 
-    execution = self.executor.execute(
+        # ------------------------------------
+        # Execute returned actions
+        # ------------------------------------
 
-        decision
+        execution = self.executor.execute(
+            decision
+        )
 
-    )
-
-    return {
-
-        "metrics": metrics,
-
-        "decision": decision,
-
-        "execution": execution
-
-    }
+        return {
+            "metrics": metrics,
+            "decision": decision,
+            "execution": execution
+        }

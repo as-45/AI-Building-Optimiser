@@ -3,7 +3,7 @@
     "idf": "model/medium_office.idf",
 
     "weather": "weather/IND_Bangalore.432950_ISHRAE.epw",
-
+    "mcp_server": "http://localhost:6274/?MCP_PROXY_AUTH_TOKEN=3a0cf21cdb30aeabfc9855dd08cda88d2859994c9778fe101c55e40c57a1e833",
     "output_directory": "outputs/runtime",
 
     "monitored_zones": [
