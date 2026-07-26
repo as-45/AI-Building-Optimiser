@@ -6,9 +6,9 @@ Coordinates the complete AI reasoning pipeline.
 
 from memory.memory_retriever import MemoryRetriever
 
-from llm.prompt_builder import PromptBuilder
+from llm.prompt.prompt_builder import PromptBuilder
 
-from llm.inference_engine import InferenceEngine
+from llm.inference.inference_engine import InferenceEngine
 
 from runtime.decision.decision_engine import DecisionEngine
 
