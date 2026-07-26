@@ -23,21 +23,26 @@ class ModelLoader:
 
     def load(self):
 
-        print("\nLoading Qwen3-8B...\n")
+    print(f"\nLoading {self.config.model_name}...\n")
 
-        self.tokenizer = AutoTokenizer.from_pretrained(
-            self.config.model_name,
-            trust_remote_code=True
-        )
+    self.tokenizer = AutoTokenizer.from_pretrained(
+        self.config.model_name,
+        trust_remote_code=True
+    )
 
-        self.model = AutoModelForCausalLM.from_pretrained(
-            self.config.model_name,
-            trust_remote_code=True,
-            torch_dtype=torch.float32
-        )
+    self.model = AutoModelForCausalLM.from_pretrained(
+        self.config.model_name,
+        trust_remote_code=True,
 
-        self.model.eval()
+        # New API
+        dtype=torch.float16,
 
-        print("✅ Model Loaded Successfully\n")
+        # Automatically use GPU if available
+        device_map="auto"
+    )
 
-        return self.model, self.tokenizer
+    self.model.eval()
+
+    print("✅ Model Loaded Successfully\n")
+
+    return self.model, self.tokenizer

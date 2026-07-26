@@ -20,47 +20,49 @@ class InferenceEngine:
     # ----------------------------------------
 
     def generate(
-        self,
-        prompt: str,
-        max_new_tokens=512
-    ):
+    self,
+    prompt: str,
+    max_new_tokens=512
+):
 
-        inputs = self.tokenizer(
-            prompt,
-            return_tensors="pt"
-        )
-
-        device = next(self.model.parameters()).device
-
-        inputs = {
-            k: v.to(device)
-            for k, v in inputs.items()
+    messages = [
+        {
+            "role": "user",
+            "content": prompt
         }
+    ]
 
-        with torch.no_grad():
+    text = self.tokenizer.apply_chat_template(
+        messages,
+        tokenize=False,
+        add_generation_prompt=True
+    )
 
-            outputs = self.model.generate(
+    inputs = self.tokenizer(
+        text,
+        return_tensors="pt"
+    ).to(self.model.device)
 
-                **inputs,
+    with torch.no_grad():
 
-                max_new_tokens=max_new_tokens,
+        outputs = self.model.generate(
 
-                do_sample=False,
+            **inputs,
 
-                temperature=0.2,
+            max_new_tokens=max_new_tokens,
 
-                top_p=0.9,
+            do_sample=False,
 
-                repetition_penalty=1.05
-
-            )
-
-        generated = self.tokenizer.decode(
-
-            outputs[0],
-
-            skip_special_tokens=True
+            pad_token_id=self.tokenizer.eos_token_id
 
         )
 
-        return generated
+    generated = self.tokenizer.decode(
+
+        outputs[0][inputs.input_ids.shape[1]:],
+
+        skip_special_tokens=True
+
+    )
+
+    return generated.strip()
