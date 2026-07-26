@@ -42,7 +42,6 @@ Return EXACTLY this schema:
       "actuator": "",
       "current": 0,
       "target": 0,
-      "delta": 0,
       "priority": "HIGH",
       "reason": ""
     }
