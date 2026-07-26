@@ -19,12 +19,7 @@ class InferenceEngine:
 
     # ----------------------------------------
 
-    def generate(
-    self,
-    prompt: str,
-    max_new_tokens=512
-):
-
+    def generate(self,prompt: str,max_new_tokens=512):
     messages = [
         {
             "role": "user",
