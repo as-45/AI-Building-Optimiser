@@ -41,11 +41,7 @@ class BuildingAIService:
         # Retrieve similar memories
         # ------------------------------------
 
-        memories = self.memory.retrieve(
-
-            str(building_context)
-
-        )
+        memories = []
 
         # ------------------------------------
         # Build prompt context
