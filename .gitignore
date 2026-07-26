@@ -1,0 +1,14 @@
+venv/
+.venv/
+__pycache__/
+.vscode/
+*.pyc
+*.pyo
+*.pyd
+.env
+.ipynb_checkpoints/
+*.log
+*.safetensors
+*.bin
+*.pt
+*.pth

@@ -1,0 +1,45 @@
+{
+
+    "idf": "model/medium_office.idf",
+
+    "weather": "weather/IND_Bangalore.432950_ISHRAE.epw",
+
+    "output_directory": "outputs/runtime",
+
+    "monitored_zones": [
+
+    "CORE_BOTTOM",
+
+    "CORE_MID",
+
+    "CORE_TOP",
+
+    "PERIMETER_BOT_ZN_1",
+
+    "PERIMETER_BOT_ZN_2",
+
+    "PERIMETER_BOT_ZN_3",
+
+    "PERIMETER_BOT_ZN_4",
+
+    "PERIMETER_MID_ZN_1",
+
+    "PERIMETER_MID_ZN_2",
+
+    "PERIMETER_MID_ZN_3",
+
+    "PERIMETER_MID_ZN_4",
+
+    "PERIMETER_TOP_ZN_1",
+
+    "PERIMETER_TOP_ZN_2",
+
+    "PERIMETER_TOP_ZN_3",
+
+    "PERIMETER_TOP_ZN_4"
+],
+
+    "callback": "after_predictor_before_hvac_managers",
+
+    "control_interval": "hourly"
+}

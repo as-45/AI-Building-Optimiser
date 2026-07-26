@@ -1,0 +1,28 @@
+{
+    "comfort": {
+        "temperature": {
+            "minimum": 22,
+            "maximum": 26,
+            "ideal": 24
+        },
+        "humidity": {
+            "minimum": 30,
+            "maximum": 60,
+            "ideal": 45
+        }
+    },
+
+    "building": {
+        "name": "Medium Office",
+        "location": "Bangalore"
+    },
+
+    "carbon": {
+
+        "grid_emission_factor":0.708,
+
+        "target_reduction_percent":15
+
+    }
+
+}

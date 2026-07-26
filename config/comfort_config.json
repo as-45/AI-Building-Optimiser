@@ -1,0 +1,9 @@
+{
+    "metabolic_rate": 1.1,
+
+    "clothing_insulation": 0.5,
+
+    "air_speed": 0.10,
+
+    "calculate_mrt_from_air": true
+}

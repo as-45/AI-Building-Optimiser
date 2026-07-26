@@ -1,0 +1,15 @@
+{
+    "max_iterations": 10,
+
+    "minimum_energy_improvement": 2.0,
+
+    "stop_if_improvement_below": 0.5,
+
+    "comfort_weight": 0.40,
+
+    "energy_weight": 0.35,
+
+    "carbon_weight": 0.15,
+
+    "hvac_weight": 0.10
+}
