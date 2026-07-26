@@ -39,9 +39,9 @@ class Decision:
 
     actions: List[Action]
 
-    estimated_energy_saving: float
+    estimated_energy_saving_percent: float
 
-    estimated_carbon_reduction: float
+    estimated_carbon_reduction_percent: float
 
     estimated_comfort_change: str
 

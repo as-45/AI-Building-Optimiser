@@ -54,9 +54,9 @@ class DecisionEngine:
 
             actions=actions,
 
-            estimated_energy_saving=data["predictions"]["estimated_energy_saving_percent"],
+            estimated_energy_saving_percent=data["predictions"]["estimated_energy_saving_percent"],
 
-            estimated_carbon_reduction=data["predictions"]["estimated_carbon_reduction_percent"],
+            estimated_carbon_reduction_percent=data["predictions"]["estimated_carbon_reduction_percent"],
 
             estimated_comfort_change=data["predictions"]["estimated_comfort_change"],
 
