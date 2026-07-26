@@ -1,20 +1,21 @@
-from llm.context_formatter import ContextFormatter
+from llm.prompt.context_formatter import ContextFormatter
 
-from llm.sections.mission import MissionSection
-from llm.sections.trigger import TriggerSection
-from llm.sections.building import BuildingSection
-from llm.sections.zones import ZoneSection
+from llm.prompt.sections.mission import MissionSection
+from llm.prompt.sections.trigger import TriggerSection
+from llm.prompt.sections.building import BuildingSection
+from llm.prompt.sections.zones import ZoneSection
 
-from llm.sections.energy import EnergySection
-from llm.sections.carbon import CarbonSection
-from llm.sections.trends import TrendSection
-from llm.sections.memory import MemorySection
-from llm.sections.weather import WeatherSection
-from llm.sections.objectives import ObjectivesSection
-from llm.sections.constraints import ConstraintsSection
-from llm.sections.actions import ActionsSection
-from llm.sections.output_format import OutputFormatSection
+from llm.prompt.sections.energy import EnergySection
+from llm.prompt.sections.carbon import CarbonSection
+from llm.prompt.sections.trends import TrendSection
+from llm.prompt.sections.memory import MemorySection
+from llm.prompt.sections.weather import WeatherSection
+from llm.prompt.sections.objectives import ObjectivesSection
+from llm.prompt.sections.constraints import ConstraintsSection
 
+from llm.prompt.actions import ActionsSection
+
+from llm.prompt.sections.output_format import OutputFormatSection
 
 class PromptBuilder:
 
