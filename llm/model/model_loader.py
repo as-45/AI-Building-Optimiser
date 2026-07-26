@@ -22,15 +22,12 @@ class ModelLoader:
     # -------------------------------------------------
 
     def load(self):
-
-    print(f"\nLoading {self.config.model_name}...\n")
-
-    self.tokenizer = AutoTokenizer.from_pretrained(
+        print(f"\nLoading {self.config.model_name}...\n")
+        self.tokenizer = AutoTokenizer.from_pretrained(
         self.config.model_name,
-        trust_remote_code=True
-    )
+        trust_remote_code=True)
 
-    self.model = AutoModelForCausalLM.from_pretrained(
+        self.model = AutoModelForCausalLM.from_pretrained(
         self.config.model_name,
         trust_remote_code=True,
 
@@ -38,11 +35,10 @@ class ModelLoader:
         dtype=torch.float16,
 
         # Automatically use GPU if available
-        device_map="auto"
-    )
+        device_map="auto")
 
-    self.model.eval()
+        self.model.eval()
 
-    print("✅ Model Loaded Successfully\n")
+        print("✅ Model Loaded Successfully\n")
 
-    return self.model, self.tokenizer
+        return self.model, self.tokenizer
