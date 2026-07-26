@@ -1,4 +1,4 @@
-Program Version,EnergyPlus, Version 26.1.0-6f2e40d102, YMD=2026.07.25 22:20,
+Program Version,EnergyPlus, Version 26.1.0-6f2e40d102, YMD=2026.07.26 18:20,
    ** Warning ** ProcessScheduleInput: Schedule:Constant = VAV_BOT MAX OA FRACTION
    **   ~~~   ** Schedule Type Limits Name is empty.
    **   ~~~   ** Schedule will not be validated.
@@ -143,4 +143,4 @@ Program Version,EnergyPlus, Version 26.1.0-6f2e40d102, YMD=2026.07.25 22:20,
    *************
    ************* EnergyPlus Warmup Error Summary. During Warmup: 0 Warning; 2 Severe Errors.
    ************* EnergyPlus Sizing Error Summary. During Sizing: 29 Warning; 0 Severe Errors.
-   ************* EnergyPlus Completed Successfully-- 11961 Warning; 2 Severe Errors; Elapsed Time=00hr 00min 53.05sec
+   ************* EnergyPlus Completed Successfully-- 11961 Warning; 2 Severe Errors; Elapsed Time=00hr 01min 36.84sec

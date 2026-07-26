@@ -1,19 +1,24 @@
 """
-Building Context Tool
+Building Context MCP Tool
 """
+
+from shared.runtime_state import RuntimeState
+
 
 def register_building_context(server):
 
     @server.tool()
-
     def get_building_context():
-
         """
-        Returns current building information.
+        Returns the latest runtime information.
         """
 
         return {
-            "building": "Medium Office",
-            "status": "Running",
-            "message": "MCP Server Working"
+
+            "building_state": RuntimeState.building_state,
+
+            "metrics": RuntimeState.metrics,
+
+            "assessment": RuntimeState.assessment
+
         }
