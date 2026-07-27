@@ -10,3 +10,7 @@ timestamp_utc,callback,source,actuator,target,status
 2026-07-27T15:18:36.924188+00:00,1058,deterministic_smoke_test_environment_3,Cooling Setpoint,27.5,applied
 2026-07-27T15:18:36.934831+00:00,1059,deterministic_smoke_test_environment_3,Cooling Setpoint,27.5,applied
 2026-07-27T15:18:36.934831+00:00,1060,deterministic_smoke_test_environment_3,Cooling Setpoint,27.5,applied
+2026-07-27T17:27:02.259422+00:00,1057,deterministic_smoke_test_environment_3,Cooling Setpoint,27.5,applied
+2026-07-27T17:27:02.259422+00:00,1058,deterministic_smoke_test_environment_3,Cooling Setpoint,27.5,applied
+2026-07-27T17:27:02.276341+00:00,1059,deterministic_smoke_test_environment_3,Cooling Setpoint,27.5,applied
+2026-07-27T17:27:02.280596+00:00,1060,deterministic_smoke_test_environment_3,Cooling Setpoint,27.5,applied

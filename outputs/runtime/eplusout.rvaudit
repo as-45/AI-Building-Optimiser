@@ -3,8 +3,8 @@
  input file:C:\hackathon\AI_building_optimiser\outputs\runtime\eplusout.eso
  output file:C:\hackathon\AI_building_optimiser\outputs\runtime\eplusout.csv
  getting all vars from:C:\hackathon\AI_building_optimiser\outputs\runtime\eplusout.eso
-  number variables requested for output=         113
- ReadVars Run Time=00hr 00min  6.86sec
+  number variables requested for output=         114
+ ReadVars Run Time=00hr 00min  7.31sec
  ReadVarsESO program completed successfully.
  ReadVarsESO
  processing:C:\hackathon\AI_building_optimiser\model\medium_office.mvi
@@ -12,5 +12,5 @@
  output file:C:\hackathon\AI_building_optimiser\outputs\runtime\eplusmtr.csv
  getting all vars from:C:\hackathon\AI_building_optimiser\outputs\runtime\eplusout.mtr
   number variables requested for output=           3
- ReadVars Run Time=00hr 00min  0.12sec
+ ReadVars Run Time=00hr 00min  0.11sec
  ReadVarsESO program completed successfully.
