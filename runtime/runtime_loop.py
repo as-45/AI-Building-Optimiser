@@ -57,7 +57,8 @@ class RuntimeLoop:
         building_state,
         history,
         current_episode,
-        trigger
+        trigger,
+        callback_number=0
     ):
         """
         Executes one autonomous control cycle.
@@ -95,7 +96,8 @@ class RuntimeLoop:
         # ------------------------------------
 
         execution = self.executor.execute(
-            decision
+            decision,
+            callback_number
         )
 
         return {

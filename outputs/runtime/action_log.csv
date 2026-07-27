@@ -1,0 +1,12 @@
+timestamp_utc,callback,source,actuator,target,status
+2026-07-27T15:13:44.981330+00:00,8,deterministic_smoke_test,Cooling Setpoint,25.0,applied
+2026-07-27T15:14:26.201515+00:00,8,deterministic_smoke_test,Cooling Setpoint,25.0,applied
+2026-07-27T15:15:38.697187+00:00,8,deterministic_smoke_test,Cooling Setpoint,25.0,applied
+2026-07-27T15:17:32.261455+00:00,1057,deterministic_smoke_test_environment_3,Cooling Setpoint,25.0,applied
+2026-07-27T15:17:32.267248+00:00,1058,deterministic_smoke_test_environment_3,Cooling Setpoint,25.0,applied
+2026-07-27T15:17:32.269256+00:00,1059,deterministic_smoke_test_environment_3,Cooling Setpoint,25.0,applied
+2026-07-27T15:17:32.273850+00:00,1060,deterministic_smoke_test_environment_3,Cooling Setpoint,25.0,applied
+2026-07-27T15:18:36.924188+00:00,1057,deterministic_smoke_test_environment_3,Cooling Setpoint,27.5,applied
+2026-07-27T15:18:36.924188+00:00,1058,deterministic_smoke_test_environment_3,Cooling Setpoint,27.5,applied
+2026-07-27T15:18:36.934831+00:00,1059,deterministic_smoke_test_environment_3,Cooling Setpoint,27.5,applied
+2026-07-27T15:18:36.934831+00:00,1060,deterministic_smoke_test_environment_3,Cooling Setpoint,27.5,applied

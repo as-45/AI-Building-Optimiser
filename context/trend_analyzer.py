@@ -35,7 +35,7 @@ class TrendAnalyzer:
 
             )
 
-        temps = [h.outdoor_temperature for h in history]
+        temps = [h.outdoor_temp for h in history]
 
         power = [h.building_power for h in history]
 

@@ -10601,3 +10601,10 @@ Output:Variable,
     Zone Predicted Sensible Load to Heating Setpoint Heat Transfer Rate,
     Detailed;
 
+!- Runtime-control verification output. This records the schedule that the
+!- Python API actuator changes during the deterministic smoke test.
+Output:Variable,
+    CLGSETP_SCH_Yes_Optimum,
+    Schedule Value,
+    Detailed;
+

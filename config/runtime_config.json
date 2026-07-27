@@ -3,8 +3,38 @@
     "idf": "model/medium_office.idf",
 
     "weather": "weather/IND_Bangalore.432950_ISHRAE.epw",
-    "mcp_server": "http://localhost:6274/?MCP_PROXY_AUTH_TOKEN=3a0cf21cdb30aeabfc9855dd08cda88d2859994c9778fe101c55e40c57a1e833",
     "output_directory": "outputs/runtime",
+
+    "actuators": {
+        "Cooling Setpoint": {
+            "component_type": "Schedule:Compact",
+            "control_type": "Schedule Value",
+            "actuator_key": "CLGSETP_SCH_Yes_Optimum",
+            "minimum": 22.0,
+            "maximum": 28.0
+        },
+        "Heating Setpoint": {
+            "component_type": "Schedule:Compact",
+            "control_type": "Schedule Value",
+            "actuator_key": "HTGSETP_SCH_Yes_Optimum",
+            "minimum": 18.0,
+            "maximum": 24.0
+        }
+    },
+
+    "smoke_test": {
+        "enabled": true,
+        "minimum_environment_number": 3,
+        "apply_for_callbacks": 4,
+        "actuator": "Cooling Setpoint",
+        "target": 27.5
+    },
+
+    "enable_llm_control": false,
+    "enable_memory_retrieval": false,
+    "decision_interval_callbacks": 4,
+    "log_interval_callbacks": 240,
+    "action_log": "outputs/runtime/action_log.csv",
 
     "monitored_zones": [
 
@@ -39,7 +69,5 @@
     "PERIMETER_TOP_ZN_4"
 ],
 
-    "callback": "after_predictor_before_hvac_managers",
-
-    "control_interval": "hourly"
+    "callback": "after_predictor_before_hvac_managers"
 }

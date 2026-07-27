@@ -45,15 +45,13 @@ class ContextBuilder:
 
         )
 
-        memories = self.memory_retriever.retrieve(
-
-            current_episode
-
-        )
+        memories = []
+        if self.memory_retriever is not None:
+            memories = self.memory_retriever.retrieve(current_episode)
 
         weather = {
 
-            "temperature": building_state.outdoor_temperature,
+            "temperature": building_state.outdoor_temp,
 
             "humidity": building_state.outdoor_humidity
 

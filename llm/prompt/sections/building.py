@@ -16,7 +16,7 @@ CURRENT BUILDING
 
 Outdoor Temperature
 
-{building_state.outdoor_temperature:.2f} °C
+{building_state.outdoor_temp:.2f} °C
 
 Outdoor Humidity
 
