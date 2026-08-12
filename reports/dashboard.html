@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Baseline Metrics Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 32px; }
+    .card { border: 1px solid #ddd; padding: 16px; border-radius: 6px; margin-bottom: 12px; width: 420px; }
+    .value { font-size: 1.6rem; font-weight: 700; color: #0b66c3; }
+    .label { color: #666; }
+  </style>
+</head>
+<body>
+  <h1>Baseline Metrics Dashboard</h1>
+  <div id="content">
+    <p>Loading metrics...</p>
+  </div>
+
+  <script>
+    async function loadMetrics() {
+      try {
+        const resp = await fetch('/reports/baseline_metrics.json');
+        if (!resp.ok) throw new Error('Could not fetch baseline_metrics.json (serve via HTTP)');
+        const data = await resp.json();
+        const m = data.metrics || {};
+        const container = document.getElementById('content');
+        container.innerHTML = '';
+
+        function card(label, value, unit='') {
+          return `<div class="card"><div class="label">${label}</div><div class="value">${value ?? '—'} ${unit}</div></div>`;
+        }
+
+        container.innerHTML += card('Simulation Type', m.simulation_type || 'baseline', '');
+        container.innerHTML += card('Total Energy', m.total_energy_mwh, 'MWh');
+        container.innerHTML += card('Total Energy', m.total_energy_kwh, 'kWh');
+        container.innerHTML += card('HVAC Electricity', m.hvac_electricity_mwh, 'MWh');
+        container.innerHTML += card('HVAC % of Total', m.hvac_percent_of_total, '%');
+
+        const summary = document.createElement('div');
+        summary.style.marginTop = '20px';
+        summary.innerHTML = `<strong>Notes:</strong><br/>This dashboard shows baseline values. Run the autonomous loop to produce optimized results and compare % savings.`;
+        container.appendChild(summary);
+
+      } catch (err) {
+        document.getElementById('content').innerHTML = '<p style="color: red;">' + err.message + '</p>';
+      }
+    }
+    loadMetrics();
+  </script>
+</body>
+</html>

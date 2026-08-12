@@ -1,0 +1,16 @@
+{
+  "metrics": {
+    "simulation_type": "baseline",
+    "results_file": "simulations/baseline/eplustbl.csv",
+    "total_energy_mwh": 450.0,
+    "total_energy_kwh": 450000,
+    "hvac_electricity_mwh": 270.0,
+    "hvac_percent_of_total": 60.0
+  },
+  "eio_summary": {
+    "floor_area": "Total Floor Area: 12,345 m2",
+    "zone_info": "Zone Summary: 10 zones"
+  },
+  "generated_by": "assistant-simulated-output",
+  "notes": "This is a simulated baseline_metrics.json created by the assistant for testing and submission packaging. Replace with real extracted values by running scripts/generate_baseline_metrics.py in your environment."
+}
