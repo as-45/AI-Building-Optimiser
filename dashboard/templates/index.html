@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Baseline vs Optimized Comparison</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; }
+    .row { display:flex; gap: 16px; align-items:flex-start; }
+    .card { border:1px solid #ddd; padding:12px; border-radius:8px; width:320px; }
+    .value { font-size:1.4rem; color:#0b66c3; font-weight:700; }
+    .label { color:#666; }
+    canvas { background: #fff; }
+  </style>
+</head>
+<body>
+  <h1>Baseline vs Optimized — Metrics Comparison</h1>
+  <p>Shows side-by-side cards and a chart comparing baseline and optimized totals. This page is served by a small Flask app.</p>
+
+  <div class="row">
+    <div class="card" id="baseline_card">
+      <div class="label">Baseline</div>
+      <div class="value" id="baseline_total">— MWh</div>
+      <div class="label">HVAC (MWh)</div>
+      <div id="baseline_hvac">—</div>
+      <div class="label">HVAC % of total</div>
+      <div id="baseline_hvac_pct">—</div>
+    </div>
+
+    <div class="card" id="optimized_card">
+      <div class="label">Optimized</div>
+      <div class="value" id="optimized_total">— MWh</div>
+      <div class="label">HVAC (MWh)</div>
+      <div id="optimized_hvac">—</div>
+      <div class="label">HVAC % of total</div>
+      <div id="optimized_hvac_pct">—</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Savings</div>
+      <div class="value" id="savings_pct">— %</div>
+      <div class="label">Absolute (MWh)</div>
+      <div id="savings_abs">— MWh</div>
+    </div>
+  </div>
+
+  <h2 style="margin-top:24px">Comparison Chart</h2>
+  <canvas id="compChart" width="800" height="300"></canvas>
+
+  <script>
+    async function loadAndRender() {
+      const [bResp, oResp, cResp] = await Promise.all([
+        fetch('/api/baseline'),
+        fetch('/api/optimized'),
+        fetch('/api/compare')
+      ]);
+      const baseline = await bResp.json();
+      const optimized = await oResp.json();
+      const compare = await cResp.json();
+
+      const bm = baseline.metrics || {};
+      const om = optimized.metrics || {};
+
+      document.getElementById('baseline_total').innerText = (bm.total_energy_mwh ?? '—') + ' MWh';
+      document.getElementById('baseline_hvac').innerText = (bm.hvac_electricity_mwh ?? '—') + ' MWh';
+      document.getElementById('baseline_hvac_pct').innerText = (bm.hvac_percent_of_total ?? '—') + ' %';
+
+      document.getElementById('optimized_total').innerText = (om.total_energy_mwh ?? '—') + ' MWh';
+      document.getElementById('optimized_hvac').innerText = (om.hvac_electricity_mwh ?? '—') + ' MWh';
+      document.getElementById('optimized_hvac_pct').innerText = (om.hvac_percent_of_total ?? '—') + ' %';
+
+      const savings = compare.percent_savings_total_energy_mwh;
+      if (savings !== null && savings !== undefined) {
+        document.getElementById('savings_pct').innerText = savings + ' %';
+        const abs = ((bm.total_energy_mwh || 0) - (om.total_energy_mwh || 0)).toFixed(2);
+        document.getElementById('savings_abs').innerText = abs + ' MWh';
+      }
+
+      // Chart
+      const ctx = document.getElementById('compChart').getContext('2d');
+      const data = {
+        labels: ['Total Energy (MWh)', 'HVAC (MWh)'],
+        datasets: [
+          { label: 'Baseline', backgroundColor: '#0b66c3', data: [bm.total_energy_mwh || 0, bm.hvac_electricity_mwh || 0] },
+          { label: 'Optimized', backgroundColor: '#2ca02c', data: [om.total_energy_mwh || 0, om.hvac_electricity_mwh || 0] }
+        ]
+      };
+
+      new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+          responsive: true,
+          scales: { y: { beginAtZero: true } }
+        }
+      });
+    }
+
+    loadAndRender().catch(err => console.error(err));
+  </script>
+</body>
+</html>
