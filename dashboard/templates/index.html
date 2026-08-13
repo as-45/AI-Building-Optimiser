@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Baseline vs Optimized Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      :root {
+        --bg: #f7f8fa;
+        --card: #ffffff;
+        --text: #1f2937;
+        --muted: #6b7280;
+        --base: #2563eb;
+        --opt: #059669;
+      }
+
+      body {
+        margin: 0;
+        padding: 24px;
+        font-family: Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      h1 {
+        margin-top: 0;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 16px;
+      }
+
+      .card {
+        background: var(--card);
+        border-radius: 10px;
+        padding: 16px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+      }
+
+      .metric {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid #eef2f7;
+      }
+
+      .metric:last-child {
+        border-bottom: 0;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .savings {
+        margin-top: 8px;
+      }
+
+      .error {
+        color: #b91c1c;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Baseline vs Optimized Comparison</h1>
+    <p class="muted">The optimized metrics file is simulated and should be replaced with real optimizer outputs.</p>
+
+    <p id="status" class="muted">Loading dashboard data…</p>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Baseline</h2>
+        <div id="baseline-metrics"></div>
+      </article>
+      <article class="card">
+        <h2>Optimized</h2>
+        <div id="optimized-metrics"></div>
+      </article>
+      <article class="card">
+        <h2>Savings</h2>
+        <div id="savings-metrics"></div>
+      </article>
+    </section>
+
+    <section class="card" style="margin-top: 16px">
+      <h2>Comparison Chart</h2>
+      <canvas id="comparison-chart" aria-label="Baseline vs optimized energy comparison"></canvas>
+    </section>
+
+    <script>
+      const metricConfig = [
+        { key: 'total_energy_mwh', label: 'Total Energy (MWh)', decimals: 2 },
+        { key: 'total_energy_kwh', label: 'Total Energy (kWh)', decimals: 0 },
+        { key: 'hvac_electricity_mwh', label: 'HVAC Electricity (MWh)', decimals: 2 },
+        { key: 'hvac_percent_of_total', label: 'HVAC % of Total', decimals: 2 },
+      ];
+
+      const numberFormat = (value, decimals = 2) => {
+        if (value === null || value === undefined || Number.isNaN(Number(value))) return '—';
+        return Number(value).toLocaleString(undefined, {
+          minimumFractionDigits: decimals,
+          maximumFractionDigits: decimals,
+        });
+      };
+
+      const renderMetrics = (container, metrics) => {
+        container.innerHTML = metricConfig
+          .map(({ key, label, decimals }) => `
+            <div class="metric">
+              <span class="muted">${label}</span>
+              <strong>${numberFormat(metrics[key], decimals)}</strong>
+            </div>
+          `)
+          .join('');
+      };
+
+      const renderSavings = (container, comparePayload) => {
+        container.innerHTML = metricConfig
+          .map(({ key, label }) => {
+            const savings = comparePayload.savings?.[key];
+            if (!savings || savings.percent_savings === null) {
+              return `<div class="metric"><span class="muted">${label}</span><strong>—</strong></div>`;
+            }
+            return `
+              <div class="metric">
+                <span class="muted">${label}</span>
+                <strong>${numberFormat(savings.percent_savings, 2)}%</strong>
+              </div>
+            `;
+          })
+          .join('');
+      };
+
+      const renderChart = (baselineMetrics, optimizedMetrics) => {
+        const ctx = document.getElementById('comparison-chart');
+
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['Total Energy (MWh)', 'HVAC Electricity (MWh)'],
+            datasets: [
+              {
+                label: 'Baseline',
+                data: [baselineMetrics.total_energy_mwh, baselineMetrics.hvac_electricity_mwh],
+                backgroundColor: '#2563eb',
+              },
+              {
+                label: 'Optimized',
+                data: [optimizedMetrics.total_energy_mwh, optimizedMetrics.hvac_electricity_mwh],
+                backgroundColor: '#059669',
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: 'top',
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+              },
+            },
+          },
+        });
+      };
+
+      const showError = (message) => {
+        const status = document.getElementById('status');
+        status.className = 'error';
+        status.textContent = message;
+      };
+
+      const init = async () => {
+        try {
+          const [baselineRes, optimizedRes, compareRes] = await Promise.all([
+            fetch('/api/baseline'),
+            fetch('/api/optimized'),
+            fetch('/api/compare'),
+          ]);
+
+          const [baselineData, optimizedData, compareData] = await Promise.all([
+            baselineRes.json(),
+            optimizedRes.json(),
+            compareRes.json(),
+          ]);
+
+          if (!baselineRes.ok) throw new Error(baselineData.error || 'Failed to load baseline metrics');
+          if (!optimizedRes.ok) throw new Error(optimizedData.error || 'Failed to load optimized metrics');
+          if (!compareRes.ok) throw new Error(compareData.error || 'Failed to load comparison metrics');
+
+          renderMetrics(document.getElementById('baseline-metrics'), baselineData.metrics || {});
+          renderMetrics(document.getElementById('optimized-metrics'), optimizedData.metrics || {});
+          renderSavings(document.getElementById('savings-metrics'), compareData || {});
+          renderChart(baselineData.metrics || {}, optimizedData.metrics || {});
+
+          const status = document.getElementById('status');
+          status.className = 'muted';
+          status.textContent = 'Loaded baseline and optimized metrics from reports/.';
+        } catch (error) {
+          showError(error.message);
+        }
+      };
+
+      init();
+    </script>
+  </body>
+</html>
