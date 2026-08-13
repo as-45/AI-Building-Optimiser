@@ -1,0 +1,16 @@
+{
+  "metrics": {
+    "simulation_type": "baseline",
+    "results_file": "simulations/baseline/eplustbl.csv",
+    "total_energy_mwh": 400.0,
+    "total_energy_kwh": 400000,
+    "hvac_electricity_mwh": 220.0,
+    "hvac_percent_of_total": 55.0
+  },
+  "eio_summary": {
+    "floor_area": "Total Floor Area: simulated value",
+    "zone_info": "Zone Summary: simulated value"
+  },
+  "generated_by": "simulated-baseline-output",
+  "notes": "SIMULATED DATA for dashboard preview. Replace with real baseline metrics generated from simulation outputs."
+}
